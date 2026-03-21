@@ -8,3 +8,12 @@ class SQLTask(models.Model):
 
     def __str__(self):
         return self.title
+    
+class HistoricalEvent(models.Model):
+    year = models.IntegerField()
+    event = models.CharField(max_length=255)
+    country = models.CharField(max_length=100)
+    notable_person = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.year} — {self.event} ({self.country})"

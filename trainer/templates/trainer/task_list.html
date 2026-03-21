@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SQL Trainer</title>
+    <style>
+        /* Стили для сообщений */
+        .message-success {
+            color: green;
+        }
+        .message-error {
+            color: red;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 5px;
+            width: 300px;
+        }
+        button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Список SQL задач</h1>
+
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li class="message-{{ message.tags }}">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <ul>
+        {% for task in tasks %}
+            <li>
+                <strong>{{ task.title }}</strong><br>
+                {{ task.description }}<br>
+                <form method="post" action="{% url 'check_sql' task.id %}">
+                    {% csrf_token %}
+                    <input type="text" name="query" placeholder="Введите SQL">
+                    <button type="submit">Проверить</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
