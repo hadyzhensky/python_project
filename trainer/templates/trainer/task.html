@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ task.title }}</title>
+</head>
+<body>
+
+<h1>{{ task.title }}</h1>
+<p>{{ task.description }}</p>
+
+<h3>Пример данных:</h3>
+<table border="1">
+    <tr>
+        <th>Year</th>
+        <th>Event</th>
+        <th>Country</th>
+    </tr>
+
+    {% for row in data %}
+    <tr>
+        <td>{{ row.year }}</td>
+        <td>{{ row.event }}</td>
+        <td>{{ row.country }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h3>Введите SQL:</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <textarea name="query" rows="10" cols="80"></textarea><br>
+    <button type="submit">Проверить</button>
+</form>
+
+<br>
+
+<!-- КНОПКА ДАЛЕЕ -->
+<a href="/trainer/task/{{ task.id|add:1 }}/">
+    <button>Следующая задача →</button>
+</a>
+
+</body>
+</html>
