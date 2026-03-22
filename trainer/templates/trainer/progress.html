@@ -1,0 +1,11 @@
+<h2>Прогресс пользователя {{ request.user.username }}</h2>
+<p>Выполнено задач: {{ completed }} / {{ total }} ({{ percent }}%)</p>
+
+<ul>
+    {% for entry in completed_list %}
+        <li>{{ entry.task.title }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'task_list' %}">К список задач</a> |
+<a href="{% url 'home' %}">На главную</a>
