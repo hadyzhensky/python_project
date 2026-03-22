@@ -2,43 +2,251 @@
 <html>
 <head>
     <title>{{ task.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/sql/sql.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            background: #f0f2f5; /* мягкий фон */
+        }
+
+        /* Основной контейнер */
+        .container {
+            display: flex;
+            height: 100%;
+        }
+
+        /* Левая панель */
+        .sidebar {
+            width: 250px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            margin-top: 0;
+            color: #ecf0f1;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 8px;
+        }
+
+        .sidebar a {
+            text-decoration: none;
+            color: #ecf0f1;
+        }
+
+        .sidebar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Правая панель */
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .task-box {
+            max-width: 900px;
+            width: 100%;
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .description {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #34495e;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        textarea {
+            width: 100%;
+            font-family: monospace;
+        }
+
+        button {
+            margin-top: 10px;
+            cursor: pointer;
+            background: #2980b9;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #3498db;
+        }
+
+        #hint {
+            color: #555;
+            margin-top: 10px;
+            padding: 10px;
+            border-left: 3px solid #2980b9;
+            background: #ecf0f1;
+            border-radius: 4px;
+        }
+
+        /* CodeMirror стили */
+        .CodeMirror {
+            height: auto;
+            min-height: 150px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background: #f7f9fa;
+        }
+
+        .result-table th {
+            background: #3498db;
+            color: white;
+        }
+
+        .result-table td {
+            background: #f7f9fa;
+        }
+
+    </style>
 </head>
 <body>
 
-<h1>{{ task.title }}</h1>
-<p>{{ task.description }}</p>
+<div class="container">
+    <!-- Левая панель -->
+    <div class="sidebar">
+        <h3>Список задач</h3>
+        <ul>
+            {% for t in all_tasks %}
+                <li><a href="{% url 'task_detail' t.id %}">{{ t.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<h3>Пример данных:</h3>
-<table border="1">
-    <tr>
-        <th>Year</th>
-        <th>Event</th>
-        <th>Country</th>
-    </tr>
+    <!-- Контент задачи -->
+    <div class="content">
+        <div class="task-box">
+            <h1>{{ task.title }}</h1>
+            <p class="description">{{ task.description }}</p>
 
-    {% for row in data %}
-    <tr>
-        <td>{{ row.year }}</td>
-        <td>{{ row.event }}</td>
-        <td>{{ row.country }}</td>
-    </tr>
-    {% endfor %}
-</table>
+            <h3>Пример данных:</h3>
+            <p><strong>Таблица: trainer_historicalevent</strong></p>
+            <table class="result-table">
+                <tr>
+                    <th>year</th>
+                    <th>event</th>
+                    <th>country</th>
+                </tr>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row.year }}</td>
+                    <td>{{ row.event }}</td>
+                    <td>{{ row.country }}</td>
+                </tr>
+                {% endfor %}
+            </table>
 
-<h3>Введите SQL:</h3>
+            <h3>Введите SQL:</h3>
+            {% if task.hint %}
+                <button onclick="toggleHint()">Показать подсказку</button>
+                <p id="hint" style="display:none;">{{ task.hint }}</p>
+                <script>
+                    function toggleHint() {
+                        var hint = document.getElementById('hint');
+                        hint.style.display = (hint.style.display === 'none') ? 'block' : 'none';
+                    }
+                </script>
+            {% endif %}
 
-<form method="post">
-    {% csrf_token %}
-    <textarea name="query" rows="10" cols="80"></textarea><br>
-    <button type="submit">Проверить</button>
-</form>
+            <form method="post">
+                {% csrf_token %}
+                <textarea id="sql-editor" name="query">{{ request.POST.query }}</textarea><br>
+                <button type="submit">Проверить</button>
+            </form>
 
-<br>
+            <script>
+                var editor = CodeMirror.fromTextArea(document.getElementById("sql-editor"), {
+                    mode: "text/x-sql",
+                    lineNumbers: true,
+                    matchBrackets: true,
+                    autofocus: true,
+                    indentWithTabs: true,
+                    smartIndent: true
+                });
+            </script>
 
-<!-- КНОПКА ДАЛЕЕ -->
-<a href="/trainer/task/{{ task.id|add:1 }}/">
-    <button>Следующая задача →</button>
-</a>
+            {% if error %}
+                <p style="color:red;">Ошибка: {{ error }}</p>
+            {% endif %}
+
+            {% if result %}
+                <table class="result-table">
+                    <tr>
+                        {% for col in columns %}
+                            <th>{{ col|lower }}</th>
+                        {% endfor %}
+                    </tr>
+                    {% for row in result %}
+                        <tr>
+                            {% for col in row %}
+                                <td>{{ col }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+
+            {% if is_correct == True %}
+                <p style="color:green;">✅ Верно!</p>
+            {% elif is_correct == False %}
+                <p style="color:red;">❌ Неверно</p>
+            {% endif %}
+
+            <div style="margin-top:15px;">
+                {% if prev_task %}
+                    <a href="{% url 'task_detail' prev_task.id %}"><button>← Предыдущая</button></a>
+                {% endif %}
+                {% if next_task %}
+                    <a href="{% url 'task_detail' next_task.id %}"><button>Следующая →</button></a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

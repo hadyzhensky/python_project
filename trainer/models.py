@@ -5,7 +5,8 @@ class SQLTask(models.Model):
     description = models.TextField()                 # описание задачи
     correct_query = models.TextField()               # правильный SQL
     created_at = models.DateTimeField(auto_now_add=True)  # дата создания
-
+    hint = models.TextField(blank=True)
+    
     def __str__(self):
         return self.title
     
