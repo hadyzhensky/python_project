@@ -1,0 +1,307 @@
+[
+  {
+    "model": "trainer.sqltask",
+    "pk": 1,
+    "fields": {
+      "title": "🧩 Задача 1 — базовая (SELECT)",
+      "description": "Условие:\r\nВыведите все события из России.",
+      "correct_query": "SELECT * FROM trainer_historicalevent\r\nWHERE country = 'Russia';",
+      "created_at": "2026-03-22T08:16:21.394Z",
+      "hint": "Для вывода всех столбцов используйте SELECT * FROM table_name"
+    }
+  },
+  {
+    "model": "trainer.sqltask",
+    "pk": 2,
+    "fields": {
+      "title": "🧩 Задача 2 — фильтр по времени",
+      "description": "Условие:\r\nВыведите все события, произошедшие после 1800 года.",
+      "correct_query": "SELECT * FROM trainer_historicalevent\r\nWHERE year > 1800;",
+      "created_at": "2026-03-22T08:16:47.018Z",
+      "hint": ""
+    }
+  },
+  {
+    "model": "trainer.sqltask",
+    "pk": 3,
+    "fields": {
+      "title": "🧩 Задача 3 — сортировка",
+      "description": "Условие:\r\nВыведите все события, отсортированные по году (от старых к новым).",
+      "correct_query": "SELECT * FROM trainer_historicalevent\r\nORDER BY year ASC;",
+      "created_at": "2026-03-22T08:17:24.457Z",
+      "hint": "Отсортируйте результаты по году с помощью ORDER BY year"
+    }
+  },
+  {
+    "model": "trainer.sqltask",
+    "pk": 4,
+    "fields": {
+      "title": "🧩 Задача 4 — выбор колонок",
+      "description": "Условие:\r\nВыведите только год и событие для Китая.",
+      "correct_query": "SELECT year, event FROM trainer_historicalevent\r\nWHERE country = 'China';",
+      "created_at": "2026-03-22T08:18:05.102Z",
+      "hint": ""
+    }
+  },
+  {
+    "model": "trainer.sqltask",
+    "pk": 5,
+    "fields": {
+      "title": "🧩 Задача 5 — агрегация",
+      "description": "Условие:\r\nПосчитайте количество событий по каждой стране.",
+      "correct_query": "SELECT country, COUNT(*) \r\nFROM trainer_historicalevent\r\nGROUP BY country;",
+      "created_at": "2026-03-22T08:18:28.449Z",
+      "hint": "Для подсчёта количества событий используйте COUNT(*)"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 1,
+    "fields": {
+      "year": 1492,
+      "event": "Открытие Америки Христофором Колумбом",
+      "country": "Spain",
+      "notable_person": "Христофор Колумб"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 2,
+    "fields": {
+      "year": 1517,
+      "event": "Начало Реформации",
+      "country": "Germany",
+      "notable_person": "Мартин Лютер"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 3,
+    "fields": {
+      "year": 1588,
+      "event": "Поражение Испанской Армады",
+      "country": "England",
+      "notable_person": "Элизабета I"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 4,
+    "fields": {
+      "year": 1600,
+      "event": "Основание Ост-Индской компании",
+      "country": "Netherlands",
+      "notable_person": null
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 5,
+    "fields": {
+      "year": 1618,
+      "event": "Тридцатилетняя война начинается",
+      "country": "Europe",
+      "notable_person": null
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 6,
+    "fields": {
+      "year": 1642,
+      "event": "Гражданская война в Англии",
+      "country": "England",
+      "notable_person": "Оливер Кромвель"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 7,
+    "fields": {
+      "year": 1643,
+      "event": "Начало правления Людовика XIV",
+      "country": "France",
+      "notable_person": "Людовик XIV"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 8,
+    "fields": {
+      "year": 1688,
+      "event": "Славная революция в Англии",
+      "country": "England",
+      "notable_person": "Вильгельм III"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 9,
+    "fields": {
+      "year": 1689,
+      "event": "Принятие Билля о правах",
+      "country": "England",
+      "notable_person": null
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 10,
+    "fields": {
+      "year": 1701,
+      "event": "Начало войны за испанское наследство",
+      "country": "Europe",
+      "notable_person": null
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 11,
+    "fields": {
+      "year": 1776,
+      "event": "Декларация независимости США",
+      "country": "USA",
+      "notable_person": "Джордж Вашингтон"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 12,
+    "fields": {
+      "year": 1789,
+      "event": "Начало Французской революции",
+      "country": "France",
+      "notable_person": "Максимилиан Робеспьер"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 13,
+    "fields": {
+      "year": 1799,
+      "event": "Наполеон становится первым консулом Франции",
+      "country": "France",
+      "notable_person": "Наполеон Бонапарт"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 14,
+    "fields": {
+      "year": 1804,
+      "event": "Наполеон коронуется императором",
+      "country": "France",
+      "notable_person": "Наполеон Бонапарт"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 15,
+    "fields": {
+      "year": 1812,
+      "event": "Отечественная война с Наполеоном",
+      "country": "Russia",
+      "notable_person": "Михаил Кутузов"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 16,
+    "fields": {
+      "year": 1815,
+      "event": "Битва при Ватерлоо",
+      "country": "Belgium",
+      "notable_person": "Наполеон Бонапарт"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 17,
+    "fields": {
+      "year": 1830,
+      "event": "Июльская революция во Франции",
+      "country": "France",
+      "notable_person": "Луи-Филипп I"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 18,
+    "fields": {
+      "year": 1848,
+      "event": "Революции в Европе",
+      "country": "Europe",
+      "notable_person": null
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 19,
+    "fields": {
+      "year": 1861,
+      "event": "Начало гражданской войны в США",
+      "country": "USA",
+      "notable_person": "Авраам Линкольн"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 20,
+    "fields": {
+      "year": 1865,
+      "event": "Окончание гражданской войны в США",
+      "country": "USA",
+      "notable_person": "Авраам Линкольн"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 21,
+    "fields": {
+      "year": 1871,
+      "event": "Объединение Германии",
+      "country": "Germany",
+      "notable_person": "Отто фон Бисмарк"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 22,
+    "fields": {
+      "year": 1870,
+      "event": "Франко-прусская война",
+      "country": "France/Germany",
+      "notable_person": "Отто фон Бисмарк"
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 23,
+    "fields": {
+      "year": 1885,
+      "event": "Берлинская конференция по Африке",
+      "country": "Germany",
+      "notable_person": null
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 24,
+    "fields": {
+      "year": 1899,
+      "event": "Начало второй опиумной войны в Китае",
+      "country": "China",
+      "notable_person": null
+    }
+  },
+  {
+    "model": "trainer.historicalevent",
+    "pk": 25,
+    "fields": {
+      "year": 1900,
+      "event": "Восстание ихэтуаней в Китае",
+      "country": "China",
+      "notable_person": null
+    }
+  }
+]
