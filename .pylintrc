@@ -1,0 +1,20 @@
+[MASTER]
+# Ignore migrations and generated files
+ignore=migrations,manage.py
+ignore-patterns=migrations
+
+[FORMAT]
+# Max line length (PEP 8)
+max-line-length=100
+
+[DESIGN]
+# Too many public methods
+max-attributes=15
+max-public-methods=10
+
+[MESSAGES CONTROL]
+# Disable messages
+disable=
+    missing-module-docstring,  # Allow some modules without docstrings
+    too-few-public-methods,    # Allow classes with few methods
+    too-many-instance-attributes,  # Allow models with many fields

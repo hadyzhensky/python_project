@@ -1,3 +1,2 @@
-from django.test import TestCase
+"""Tests for SQL Trainer application."""
 
-# Create your tests here.
